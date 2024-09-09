@@ -15,8 +15,7 @@
         <button type="submit" name="action" value="de">German</button>
         <button type="submit" name="action" value="ja">Japanese</button>
         <button type="submit" name="action" value="ko">Korean</button>
-        <button type="submit" name="action" value="es">spanish</button>
-    </button>
+        <button type="submit" name="action" value="es">Spanish</button>
     </form>
 
     <!-- Display error messages if any -->
@@ -24,9 +23,16 @@
         <p style="color:red;">{{ error }}</p>
     {% endif %}
 
-    <!-- Display success messages if any -->
+    <!-- Display success message if any -->
     {% if message %}
         <p style="color:green;">{{ message }}</p>
+    {% endif %}
+
+    <!-- Show download button if translation is successful -->
+    {% if download_url %}
+        <a href="{{ download_url }}" download>
+            <button>Download Translated File</button>
+        </a>
     {% endif %}
 </body>
 </html>

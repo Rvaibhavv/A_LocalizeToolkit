@@ -4,7 +4,7 @@ from .models import UploadedFile
 from googletrans import Translator
 from bs4 import BeautifulSoup
 import os
-
+from django.conf import settings
 translator = Translator()
 
 def index(request): 
@@ -51,16 +51,21 @@ def language(request):
 
                 translated_html_content = str(soup)
                 
-                translated_file_name = f' translated_html_{dest_lang}.html'
-                translated_file_path = os.path.join('media/translated', translated_file_name)
+                translated_file_name = f'translated_html_{dest_lang}.html'
+                translated_file_path = os.path.join(settings.MEDIA_ROOT, 'translated', translated_file_name)
                 
                 os.makedirs(os.path.dirname(translated_file_path), exist_ok=True)
                 
+                # Save the translated file
                 with open(translated_file_path, 'w', encoding='utf-8') as file:
                     file.write(translated_html_content)
 
+                # Prepare the download URL
+                download_url = os.path.join(settings.MEDIA_URL, 'translated', translated_file_name)
+
                 return render(request, 'WebTranslator/translate.html', {
-                    'message': f'Translation complete and saved to "{translated_file_name}".'
+                    'message': 'Translation complete!',
+                    'download_url': download_url  # Pass the download URL to the template
                 })
 
             except Exception as e:
