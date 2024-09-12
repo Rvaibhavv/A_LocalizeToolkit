@@ -10,5 +10,18 @@
         {{ form.as_p }}
         <button type ='submit' name="action" value="describe">Upload</button>
     </form>
+    {% if messages %}
+    <div>
+        {% for message in messages %}
+        <p style="color: green;">
+                {{ message }}
+        </p>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if response %}
+    <p>{{ response }}</p>
+{% endif %}
 </body>
 </html>
